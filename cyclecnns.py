@@ -182,17 +182,17 @@ def train(vgg_mvcnn,mvcnn_vgg,vggc,mvcnnc,trainLoader,optimizer1,optimizer2,epoc
         feature = vgg_mvcnn(vgg)
     
         loss_1 = criterion(feature,mvcnn_o)
-		loss_2 = criterion(mvcnn_vgg(feature),vgg_o)
+	loss_2 = criterion(mvcnn_vgg(feature),vgg_o)
 		        
-		labelvgg = np.transpose(labelvgg)
+	labelvgg = np.transpose(labelvgg)
         labelvgg = torch.squeeze(labelvgg) 
         labelvgg = labelvgg.type(torch.LongTensor)
         labelvgg = labelvgg.cuda()
         labelvgg = Variable(labelvgg)
 		
-		loss_3 = cost(mvcnnc(feature),labelvgg)
+	loss_3 = cost(mvcnnc(feature),labelvgg)
 		
-		loss = loss_1+loss_2+loss_3
+	loss = loss_1+loss_2+loss_3
             
         loss.backward()
         optimizer1.step()
@@ -203,16 +203,16 @@ def train(vgg_mvcnn,mvcnn_vgg,vggc,mvcnnc,trainLoader,optimizer1,optimizer2,epoc
         feature = mvcnn_vgg(mvcnn)
         
         loss_1 = criterion(feature,vgg_o)
-		loss_2 = criterion(vgg_mvcnn(feature),mvcnn_o)
+	loss_2 = criterion(vgg_mvcnn(feature),mvcnn_o)
 		
-		labelmvcnn = np.transpose(labelmvcnn)
+	labelmvcnn = np.transpose(labelmvcnn)
         labelmvcnn = torch.squeeze(labelmvcnn) 
         labelmvcnn = labelmvcnn.type(torch.LongTensor)
         labelmvcnn = labelmvcnn.cuda()
         labelmvcnn = Variable(labelmvcnn)
 		
-		loss_3 = cost(vggc(feature),labelmvcnn)
-		loss = loss_1 + loss_2 + loss_3
+	loss_3 = cost(vggc(feature),labelmvcnn)
+	loss = loss_1 + loss_2 + loss_3
             
         loss.backward()
         optimizer2.step()
